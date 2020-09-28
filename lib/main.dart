@@ -10,23 +10,29 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
+class MyHomePage extends StatelessWidget {
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+            title: Text(
+          "Flutter app",
+        )),
+        body: Column(
+          children: [
+            Container(
+                width: double.infinity,
+                child: Card(
+                    color: Colors.blue, elevation: 5, child: Text("CHART"))),
+            Card(
+              child: Text("List of Tx"),
+            )
+          ],
+        ));
   }
 }
