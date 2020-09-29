@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-import './transaction.dart';
+import '../models/transaction.dart';
 
 class TransactionItem extends StatelessWidget {
   final Transaction _transaction;
@@ -12,12 +13,13 @@ class TransactionItem extends StatelessWidget {
     return Row(
       children: [
         Container(
+          width: 110,
           margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           decoration:
               BoxDecoration(border: Border.all(color: Colors.purple, width: 2)),
           padding: EdgeInsets.all(10),
           child: Text(
-            _transaction.amount.toString(),
+            "${_transaction.amount} €",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -32,7 +34,7 @@ class TransactionItem extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
             Text(
-              _transaction.date.toString(),
+              DateFormat.yMMMMd().format(_transaction.date),
               style: TextStyle(fontSize: 12, color: Colors.grey),
             )
           ],
