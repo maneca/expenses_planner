@@ -15,11 +15,29 @@ class TransactionList extends StatelessWidget {
         /* ListView.builder() builds widgets as required (i.e. when they can be seen)
          It's preferable for lists that you do not know its size
        */
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return TransactionItem(_transactions[index]);
-          },
-          itemCount: _transactions.length,
-        ));
+        child: _transactions.isEmpty
+            ? Column(
+                children: [
+                  Text(
+                    "No transactions added yet",
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                      height: 200,
+                      child: Image.asset(
+                        "assets/images/waiting.png",
+                        fit: BoxFit.cover,
+                      ))
+                ],
+              )
+            : ListView.builder(
+                itemBuilder: (context, index) {
+                  return TransactionItem(_transactions[index]);
+                },
+                itemCount: _transactions.length,
+              ));
   }
 }

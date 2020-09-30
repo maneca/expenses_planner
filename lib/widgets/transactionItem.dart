@@ -15,15 +15,16 @@ class TransactionItem extends StatelessWidget {
         Container(
           width: 110,
           margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          decoration:
-              BoxDecoration(border: Border.all(color: Colors.purple, width: 2)),
+          decoration: BoxDecoration(
+              border:
+                  Border.all(color: Theme.of(context).primaryColor, width: 2)),
           padding: EdgeInsets.all(10),
           child: Text(
             "${_transaction.amount} €",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Colors.purple),
+                color: Theme.of(context).primaryColor,
+                fontSize: 20),
           ),
         ),
         Column(
@@ -31,7 +32,10 @@ class TransactionItem extends StatelessWidget {
           children: [
             Text(
               _transaction.title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline6,
             ),
             Text(
               DateFormat.yMMMMd().format(_transaction.date),
