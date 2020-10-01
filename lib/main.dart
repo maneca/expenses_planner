@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/transactionList.dart';
-import 'widgets/transactionInsert.dart';
-import 'widgets/expensesChart.dart';
 import 'models/transaction.dart';
+import 'widgets/expensesChart.dart';
+import 'widgets/transactionInsert.dart';
+import 'widgets/transactionList.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
               headline6: TextStyle(
                   fontFamily: "OpenSans",
                   fontSize: 18,
-                  fontWeight: FontWeight.bold)),
+                  fontWeight: FontWeight.bold),
+              button: TextStyle(color: Colors.white)),
           appBarTheme: AppBarTheme(
               textTheme: ThemeData.light().textTheme.copyWith(
                   headline6: TextStyle(
@@ -41,15 +42,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    // Transaction(
-    //     id: "t1", title: "New shoes", amount: 69.99, date: DateTime.now()),
-    // Transaction(
-    //     id: "t2",
-    //     title: "Weekly groceries",
-    //     amount: 16.53,
-    //     date: DateTime.now()),
-  ];
+  final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tx) {
@@ -57,12 +50,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final Transaction tx = Transaction(
         id: DateTime.now().toString(),
         title: title,
         amount: amount,
-        date: DateTime.now());
+        date: chosenDate);
 
     setState(() {
       _transactions.add(tx);
@@ -78,6 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
               behavior: HitTestBehavior.opaque,
               child: TransactionInsert(_addNewTransaction));
         });
+  }
+
+  void _deleteTransaction(Transaction transaction) {
+    setState(() {
+      _transactions.remove(transaction);
+    });
   }
 
   @override
@@ -98,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ExpensesChart(_recentTransactions),
-            TransactionList(_transactions)
+            TransactionList(_transactions, _deleteTransaction)
           ],
         ),
       ),

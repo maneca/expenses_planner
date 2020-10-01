@@ -5,45 +5,33 @@ import '../models/transaction.dart';
 
 class TransactionItem extends StatelessWidget {
   final Transaction _transaction;
+  final Function _transactionDelete;
 
-  TransactionItem(this._transaction);
+  TransactionItem(this._transaction, this._transactionDelete);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 110,
-          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          decoration: BoxDecoration(
-              border:
-                  Border.all(color: Theme.of(context).primaryColor, width: 2)),
-          padding: EdgeInsets.all(10),
-          child: Text(
-            "${_transaction.amount} €",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-                fontSize: 20),
-          ),
+    return Card(
+      elevation: 5,
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 30,
+          child: Padding(
+              padding: EdgeInsets.all(6),
+              child: FittedBox(child: Text("${_transaction.amount} €"))),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              _transaction.title,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headline6,
-            ),
-            Text(
-              DateFormat.yMMMMd().format(_transaction.date),
-              style: TextStyle(fontSize: 12, color: Colors.grey),
-            )
-          ],
-        )
-      ],
+        title: Text(
+          _transaction.title,
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        subtitle: Text(DateFormat.yMMMd().format(_transaction.date)),
+        trailing: IconButton(
+          icon: Icon(Icons.delete),
+          color: Theme.of(context).errorColor,
+          onPressed: () => _transactionDelete(_transaction),
+        ),
+      ),
     );
   }
 }
