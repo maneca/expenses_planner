@@ -3,3 +3,5 @@
 A Flutter expenses planner
 
 This is my first approach to Flutter development
+
+![GitHub Logo](/images/logo.png)
