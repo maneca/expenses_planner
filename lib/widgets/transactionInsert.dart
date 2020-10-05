@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+
+import 'adaptiveFlatButton.dart';
 
 class TransactionInsert extends StatefulWidget {
   final Function transactionInsert;
@@ -30,10 +33,10 @@ class _TransactionInsertState extends State<TransactionInsert> {
 
   void _showDatePicker() {
     showDatePicker(
-            context: context,
-            initialDate: _selectedDate == null ? DateTime.now() : _selectedDate,
-            firstDate: DateTime(2020),
-            lastDate: DateTime.now())
+        context: context,
+        initialDate: _selectedDate == null ? DateTime.now() : _selectedDate,
+        firstDate: DateTime(2020),
+        lastDate: DateTime.now())
         .then((value) {
       if (value == null) return;
       setState(() {
@@ -76,13 +79,7 @@ class _TransactionInsertState extends State<TransactionInsert> {
                         child: Text(_selectedDate == null
                             ? "No date chosen"
                             : "Picked date: ${DateFormat.yMd().format(_selectedDate)}")),
-                    FlatButton(
-                        textColor: Theme.of(context).primaryColor,
-                        onPressed: _showDatePicker,
-                        child: Text(
-                          "Choose a data",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ))
+                    AdaptiveFlatButton("Choose a date", _showDatePicker)
                   ],
                 ),
               ),
