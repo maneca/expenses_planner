@@ -34,11 +34,56 @@ class _PageBodyState extends State<PageBody> {
     });
   }
 
+  List<Widget> _buildLandscapeContent(
+      MediaQueryData mediaQuery, Widget txListWidget) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Switch.adaptive(
+              // adaptive is to show the switch with the design according to the platform(android or ios)
+              activeColor: Theme.of(context).accentColor,
+              value: _showChart,
+              onChanged: (val) {
+                setState(() {
+                  _showChart = val;
+                });
+              }),
+          Text(
+            "Show chart",
+            style: Theme.of(context).textTheme.headline6,
+          )
+        ],
+      ),
+      _showChart
+          ? Container(
+              height: (mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.7,
+              child: ExpensesChart(_recentTransactions))
+          : txListWidget
+    ];
+  }
+
+  List<Widget> _buildPortraitContent(
+      MediaQueryData mediaQuery, Widget txListWidget) {
+    return [
+      Container(
+          height: (mediaQuery.size.height -
+                  appBar.preferredSize.height -
+                  mediaQuery.padding.top) *
+              0.3,
+          child: ExpensesChart(_recentTransactions)),
+      txListWidget
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
-    final txList = Container(
+    final txListWidget = Container(
         height: (mediaQuery.size.height -
                 appBar.preferredSize.height -
                 mediaQuery.padding.top) *
@@ -50,42 +95,11 @@ class _PageBodyState extends State<PageBody> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // ... is called spread operator and it flattens a list
           if (isLandscape)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Switch.adaptive(
-                    // adaptive is to show the switch with the design according to the platform(android or ios)
-                    activeColor: Theme.of(context).accentColor,
-                    value: _showChart,
-                    onChanged: (val) {
-                      setState(() {
-                        _showChart = val;
-                      });
-                    }),
-                Text(
-                  "Show chart",
-                  style: Theme.of(context).textTheme.headline6,
-                )
-              ],
-            ),
-          if (!isLandscape)
-            Container(
-                height: (mediaQuery.size.height -
-                        appBar.preferredSize.height -
-                        mediaQuery.padding.top) *
-                    0.3,
-                child: ExpensesChart(_recentTransactions)),
-          if (!isLandscape) txList,
-          if (isLandscape)
-            _showChart
-                ? Container(
-                    height: (mediaQuery.size.height -
-                            appBar.preferredSize.height -
-                            mediaQuery.padding.top) *
-                        0.7,
-                    child: ExpensesChart(_recentTransactions))
-                : txList
+            ..._buildLandscapeContent(mediaQuery, txListWidget)
+          else
+            ..._buildPortraitContent(mediaQuery, txListWidget)
         ],
       ),
     ));

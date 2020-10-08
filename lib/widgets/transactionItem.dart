@@ -7,7 +7,7 @@ class TransactionItem extends StatelessWidget {
   final Transaction _transaction;
   final Function _transactionDelete;
 
-  TransactionItem(this._transaction, this._transactionDelete);
+  const TransactionItem(this._transaction, this._transactionDelete);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class TransactionItem extends StatelessWidget {
         leading: CircleAvatar(
           radius: 30,
           child: Padding(
-              padding: EdgeInsets.all(6),
+              padding: const EdgeInsets.all(6),
               child: FittedBox(child: Text("${_transaction.amount} €"))),
         ),
         title: Text(
@@ -30,12 +30,14 @@ class TransactionItem extends StatelessWidget {
             ? FlatButton.icon(
                 onPressed: () => _transactionDelete(_transaction),
                 textColor: Theme.of(context).errorColor,
-                icon: Icon(Icons.delete),
-                label: Text("Delete"))
+                icon: const Icon(Icons.delete),
+                label: const Text("Delete"))
             : IconButton(
-                icon: Icon(Icons.delete),
-                color: Theme.of(context).errorColor,
-                onPressed: () => _transactionDelete(_transaction),
+          icon: const Icon(Icons.delete),
+          color: Theme
+              .of(context)
+              .errorColor,
+          onPressed: () => _transactionDelete(_transaction),
               ),
       ),
     );

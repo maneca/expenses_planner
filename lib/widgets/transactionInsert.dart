@@ -65,7 +65,7 @@ class _TransactionInsertState extends State<TransactionInsert> {
                 onSubmitted: (_) => _submitData(),
               ),
               TextField(
-                decoration: InputDecoration(labelText: "Amount"),
+                decoration: const InputDecoration(labelText: "Amount"),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 controller: _amountController,
@@ -85,7 +85,7 @@ class _TransactionInsertState extends State<TransactionInsert> {
               ),
               RaisedButton(
                 onPressed: _submitData,
-                child: Text("Add Transaction"),
+                child: const Text("Add Transaction"),
                 textColor: Theme.of(context).textTheme.button.color,
                 color: Theme.of(context).primaryColor,
               )

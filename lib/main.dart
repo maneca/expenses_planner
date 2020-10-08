@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
     showModalBottomSheet(
         context: context,
         isScrollControlled:
-        true, //  it'll allow the bottom sheet to take the full required height
+            true, //  it'll allow the bottom sheet to take the full required height
         builder: (_) {
           return GestureDetector(
               onTap: () {},
@@ -71,52 +71,55 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final PreferredSizeWidget appBar = Platform.isIOS
+  Widget _buildAppBar() {
+    return Platform.isIOS
         ? CupertinoNavigationBar(
-            middle: Text(
+            middle: const Text(
               "Personal expenses",
             ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 GestureDetector(
-                  child: Icon(CupertinoIcons.add),
+                  child: const Icon(CupertinoIcons.add),
                   onTap: () => _startAddNewTransaction(context),
                 )
               ],
             ),
           )
         : AppBar(
-            title: Text(
-              "Personal expenses",
-            ),
-            actions: [
-              IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () => _startAddNewTransaction(context))
-            ],
-          );
+      title: const Text(
+        "Personal expenses",
+      ),
+      actions: [
+        IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => _startAddNewTransaction(context))
+      ],
+    );
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    final PreferredSizeWidget appBar = _buildAppBar();
     final pageBody = PageBody(_transactions, appBar);
 
     return Platform.isIOS
         ? CupertinoPageScaffold(
-            child: pageBody,
-            navigationBar: appBar,
-          )
+      child: pageBody,
+      navigationBar: appBar,
+    )
         : Scaffold(
-            appBar: appBar,
-            body: pageBody,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: Platform.isIOS
-                ? Container()
-                : FloatingActionButton(
-                    onPressed: () => _startAddNewTransaction(context),
-                    child: Icon(Icons.add),
-                  ),
-          );
+      appBar: appBar,
+      body: pageBody,
+      floatingActionButtonLocation:
+      FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+        onPressed: () => _startAddNewTransaction(context),
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }

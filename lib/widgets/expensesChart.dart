@@ -40,7 +40,7 @@ class ExpensesChart extends StatelessWidget {
       elevation: 6,
       margin: EdgeInsets.all(20),
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: groupedTransactionValues.map((data) {
